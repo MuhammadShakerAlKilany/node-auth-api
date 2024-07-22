@@ -17,13 +17,13 @@ module.exports = {
             res.send({
               success: false,
               message: "Login Failed",
-            });
+            },400);
           }
         } else {
           res.send({
             success: false,
             message: "Login Failed",
-          });
+          },400);
         }
       })
       .catch((err) => {
@@ -31,15 +31,14 @@ module.exports = {
       });
   },
   register: async (req, res) => {
-    try {
-        
+    try { 
     const saltRounds = 10;
     const userFind = await user.findOne({ email: req.body.email });
     if (userFind) {
       res.send({
         success: false,
         message: "Email Already Exist",
-      });
+      },406);
     }
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(req.body.password, salt);
@@ -47,13 +46,19 @@ module.exports = {
     user
       .create(req.body)
       .then((user) => {
+        if (!user) {
+          res.send({
+            success: false,
+            message: "Register Failed",
+          },400);
+        }
         user = user.toObject();
         user.password = undefined;
         res.send({
           success: true,
           message: "Register Success",
           user,
-        });
+        },201);
       })
       .catch((err) => {
         console.log("error", err);
