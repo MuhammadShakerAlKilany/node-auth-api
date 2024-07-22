@@ -34,6 +34,13 @@ module.exports = {
     try {
         
     const saltRounds = 10;
+    const userFind = await user.findOne({ email: req.body.email });
+    if (userFind) {
+      res.send({
+        success: false,
+        message: "Email Already Exist",
+      });
+    }
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(req.body.password, salt);
     req.body.password = hash
