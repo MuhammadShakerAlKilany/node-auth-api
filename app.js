@@ -5,8 +5,13 @@ const app = express()
 const cors = require('cors')
 const port=process.env.PORT || 3000
 const mongoUri = process.env.MONGO_URL 
+const { swaggerUi, swaggerDocs } = require('./swagger');
+
 app.use(cors())
 app.use(express.json())
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.get('/', function (req, res) {
   res.send('Hello To Auth Node App')
 })
