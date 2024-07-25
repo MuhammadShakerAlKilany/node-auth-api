@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 /**
  * @swagger
- * /login:
+ * /v1/auth/login:
  *   post:
  *     summary: Login a user
  *     tags: [Auth]
@@ -76,7 +76,7 @@ const bcrypt = require('bcrypt');
 
 /**
  * @swagger
- * /register:
+ * /v1/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]

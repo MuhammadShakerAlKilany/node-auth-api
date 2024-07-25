@@ -11,8 +11,12 @@ const swaggerOptions = {
       },
       servers: [
         {
-          url: 'http://localhost:400',
+          url: 'http://localhost:4000/api',
+
         },
+        {
+          url: 'https://nodeauthapiproduction.up.railway.app/api',
+        }
       ],
     },
     apis: ['./routes/*.js','./app.js','./controllers/*.js'],
