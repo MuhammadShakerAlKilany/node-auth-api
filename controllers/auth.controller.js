@@ -50,7 +50,7 @@ const bcrypt = require('bcrypt');
  *                 user:
  *                   type: object
  *                   properties:
- *                     id:
+ *                     _id:
  *                       type: string
  *                       example: 60c72b2f5f1b2c001c8e4c1a
  *                     email:
@@ -59,6 +59,12 @@ const bcrypt = require('bcrypt');
  *                     name:
  *                       type: string
  *                       example: John Doe
+ *                     createdAt:
+ *                       type: string
+ *                       example: 2021-03-18T12:00:00.000Z
+ *                     updatedAt:
+ *                       type: string
+ *                       example: 2021-03-18T12:00:00.000Z
  *       400:
  *         description: Login failed
  *         content:
@@ -123,7 +129,7 @@ const bcrypt = require('bcrypt');
  *                 user:
  *                   type: object
  *                   properties:
- *                     id:
+ *                     _id:
  *                       type: string
  *                       example: 60c72b2f5f1b2c001c8e4c1a
  *                     email:
@@ -132,6 +138,12 @@ const bcrypt = require('bcrypt');
  *                     name:
  *                       type: string
  *                       example: John Doe
+ *                     createdAt:
+ *                       type: string
+ *                       example: 2021-03-18T12:00:00.000Z
+ *                     updatedAt:
+ *                       type: string
+ *                       example: 2021-03-18T12:00:00.000Z
  *       400:
  *         description: Registration failed
  *         content:
@@ -167,6 +179,8 @@ module.exports = {
         if (user) {
          const isMatch = await bcrypt.compare(req.body.password, user.password)
           if (isMatch) {
+            user.password = undefined;
+            user.__v = undefined;
             res.send({
               success: true,
               message: "Login Success",
@@ -213,6 +227,7 @@ module.exports = {
         }
         user = user.toObject();
         user.password = undefined;
+        user.__v = undefined;
         res.send({
           success: true,
           message: "Register Success",
